@@ -3,8 +3,8 @@ import importlib
 from utils import *
 
 MODEL_DIR = None
-DATA_DIR = 'D:/CVPR22-Fact-main/data/'
-PROJECT = 'fact'
+DATA_DIR = '/data/'
+PROJECT = ''
 
 
 def get_command_line_parser():
@@ -54,12 +54,7 @@ def get_command_line_parser():
     parser.add_argument('-weight_num', type=int, default=20)
     parser.add_argument('-rand_num', type=list, default=[10])
     parser.add_argument('-use_pub', type=bool, default=False)
-
-    # parser.add_argument('-balance', type=float, default=0.001)
-    # parser.add_argument('-alpha', type=float, default=0.5)
-    # parser.add_argument('-eta', type=float, default=0.1)
-    # parser.add_argument('-loss_iter', type=int, default=0)
-    # parser.add_argument('-extra_disc', type=str, default="NEW random_num samples")
+    parser.add_argument('-use_UA', type=bool, default=False)
 
     return parser
 
@@ -70,5 +65,5 @@ if __name__ == '__main__':
     set_seed(args.seed)
     pprint(vars(args))
     args.num_gpu = set_gpu(args)
-    trainer = importlib.import_module('models.%s.fscil_trainer' % (args.project)).FSCILTrainer(args)
+    trainer = importlib.import_module('models.base.fscil_trainer').FSCILTrainer(args)
     trainer.train()
